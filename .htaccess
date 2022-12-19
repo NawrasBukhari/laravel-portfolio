@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+# That was ONLY to protect you from 500 errors
+# if your server did not have mod_rewrite enabled
+
+RewriteEngine On
+# RewriteBase /
+# NOT needed unless you're using mod_alias to redirect
+
+# Direct all requests to /public folder (except /public itself)
+RewriteCond %{REQUEST_URI} !/public
+
+# block access to .htaccess, .htpasswd, .git, .svn, .env, .php files
+RewriteCond %{REQUEST_URI} !^/public
+RewriteCond %{REQUEST_URI} !^/public/.*
+RewriteCond %{REQUEST_URI} !^/public/.*$
+RewriteCond %{REQUEST_URI} !^/public/.*\.(htaccess|htpasswd|git|svn|env|php)$
+RewriteRule ^(.*)$ public/$1 [L]
+
+</IfModule>
